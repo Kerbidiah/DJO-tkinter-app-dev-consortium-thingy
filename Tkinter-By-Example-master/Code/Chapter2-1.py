@@ -59,8 +59,7 @@ class Todo(tk.Tk):
 # if this program is ran (not imported) do this
 print(__name__)
 if __name__ == "__main__":
-	todo = Todo()  # store ui in todo
-	todo.mainloop()  # display the window
+	Todo().mainloop()
 
 """
 import tkinter as tk
