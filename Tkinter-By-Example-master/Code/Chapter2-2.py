@@ -36,7 +36,7 @@ class Todo(tk.Tk):
 
 		# make canvas take up entire window + expand to as big as possible
 		self.tasksCanvas.pack(side=tk.TOP, fill=tk.BOTH, expand=1)
-		
+
 		self.scrollbar.pack(side=tk.RIGHT, fill=tk.Y) # make scroll bar on right side and fill y
 
 		# ????
