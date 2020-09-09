@@ -2,7 +2,7 @@ import tkinter as tk
 
 class Root(tk.Tk):
     def __init__(self):
-        super().__init__()
+        super().__init__() # have no idea what this does
 
         #basically everything is the same, but we use self instead of root
         self.label = tk.Label(self, text="hello world",

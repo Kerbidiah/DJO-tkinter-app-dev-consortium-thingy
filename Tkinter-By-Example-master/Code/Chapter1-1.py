@@ -1,17 +1,16 @@
 import tkinter as tk
 
-root = tk.Tk() # makes the window
+root = tk.Tk()  # makes the window
 
 # first arg is always what the object will be inside of
 label = tk.Label(root,
-		text="hello world",
-		padx=10, pady=10)
+				text="hello world",
+				padx=10, pady=10)
 
-label.pack()# actually puts in into the root
-			# more investagation required here
-			# also grid() could do it, but differently
+label.pack() # actually puts in into the root
+			 # also grid() could do it, but differently
 
-root.mainloop()	# shows the window
+root.mainloop()  # shows the window
 
 """
 import tkinter as tk
