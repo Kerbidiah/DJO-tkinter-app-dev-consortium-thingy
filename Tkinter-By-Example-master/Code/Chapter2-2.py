@@ -24,11 +24,11 @@ class Todo(tk.Tk):
 		self.taskCreate = tk.Text(self.textFrame, height=3, bg="white", fg="black")
 
 		# make a frame inside the canvas
-		# this is where we will put all the task label BOIs
+		# this is where we will put all the task labels
 		self.tasksFrame = tk.Frame(self.tasksCanvas)
 
 		# make a vertical scroll bar
-		self.scrollbar = tk.Scrollbar(self.tasksCanvas, orient="vertical", commmand=self.tasksCanvas.yview)
+		self.scrollbar = tk.Scrollbar(self.tasksCanvas, orient="vertical", command=self.tasksCanvas.yview)
 		self.tasksCanvas.configure(yscrollcommand=self.scrollbar.set)
 
 		self.title("To-Do App v1") # title of window (shows at top)
@@ -57,30 +57,31 @@ class Todo(tk.Tk):
 		for task in self.tasks:
 			task.pack(side=tk.TOP, fill=tk.X)
 
-		# key bindings
-		# for key bindings, DON'T PUT PARENTHESES AT END, we want the func itself,...
-		# not the func to execute and hand a result to the bind() function
+		# for key bindings, DON'T PUT PARENTHESES AT END, we want the func itself,
+		# not the func to execute and return the result
 		self.bind("<Return>", self.addTask)
-		self.bind("<Configure>", self.onFrameConfigure)
-		self.bind_all("<MouseWheel>", self.mouseScroll)
-		self.bind_all("<Button-4>", self.mouseScroll)
-		self.bind_all("<button-5>", self.mouseScroll)
 
-		# color schemes
+		# not a real button, but "pressed" when the window is resized or moved (on some OS's)
+		self.bind("<Configure>", self.onFrameConfig)
+
+		# I guess bind_all adds a binding that applies to the entire window?
+		self.bind_all("<MouseWheel>", self.mouseScroll)
+		self.bind_all("<Button-4>", self.mouseScroll) # alternate scroll? for gAmInG mIcE that have extra buttons?
+		self.bind_all("<Button-5>", self.mouseScroll) # alternate scroll? for gAmInG mIcE that have extra buttons?
+
 		self.colorScheme = [{"bg": "lightgrey", "fg": "black"},
 							{"bg": "grey", "fg": "white"}]
 
 	def addTask(self):
-
-		# gets text from the box and removes front and back whitespace
+		# gets text from the input box and removes front and back whitespace
 		taskText = self.taskCreate.get(1.0, tk.END).strip()
 
 		if len(taskText) > 0: # makes sure the input isn't blank
 			# make label
-			newTask = tk.Label(self.tasksFrame, text=taskText, pady=10) # makes the label
+			newTask = tk.Label(self.tasksFrame, text=taskText, pady=10)
 			self.setTaskColor(len(self.tasks), newTask)
 
-			# bind, pack, add
+			# bind, pack, append [to list]
 			newTask.bind("<Button-1>", self.removeTask)
 			newTask.pack(side=tk.TOP, fill=tk.X)
 			self.tasks.append(newTask)
@@ -88,9 +89,9 @@ class Todo(tk.Tk):
 		self.taskCreate.delete(1.0, tk.END) # clears the text box
 
 	def removeTask(self, event):
-		task = event.widget
+		task = event.widget # sets task equal to the label that is being deleted?
 
-		if msg.askyesno("Really Delete?", "Delete " + task.cget("text") + "?"):
+		if msg.askyesno("Really Delete?", "Delete " + task.cget("text") + "?"): # yes or no popup
 			# destroy all traces of it
 			self.tasks.remove(event.widget)
 			event.widget.destroy()
@@ -111,7 +112,7 @@ class Todo(tk.Tk):
 		task.configure(bg=scheme["bg"])
 		task.configure(fg=scheme["fg"])
 
-	def onFrameConfigure(self):
+	def onFrameConfig(self):
 		self.tasksCanvas.configure(scrollregion=self.tasksCanvas.bbox("all"))
 
 	def taskWidth(self, event):
