@@ -42,15 +42,15 @@ class Todo(tk.Tk):
 		# ????
 		self.canvasFrame = self.tasksCanvas.create_window((0, 0), window=self.tasksFrame, anchor="n")
 
-		# pack a bunch of stuff
+		# pack stuff
 		self.taskCreate.pack(side=tk.BOTTOM, fill=tk.X)
-		self.tasksFrame.pack(side=tk.BOTTOM, fill=tk.X)
+		self.textFrame.pack(side=tk.BOTTOM, fill=tk.X)
 
 		self.taskCreate.focus_set() # set focus to text input
 
 		# this sets up the first entry + key-bind
 		todo1 = tk.Label(self.tasksFrame, text="---add here---", bg="lightgray", fg="black", pady=10)
-		todo1.bind("<Button-1>", self.removeTask)
+		todo1.bind("<Button-1>", self.removeTask) # button 1 = left click
 		self.tasks.append(todo1)
 
 		# "packs" all the tasks that were given when inited
@@ -66,15 +66,19 @@ class Todo(tk.Tk):
 
 		# I guess bind_all adds a binding that applies to the entire window?
 		self.bind_all("<MouseWheel>", self.mouseScroll)
-		self.bind_all("<Button-4>", self.mouseScroll) # alternate scroll? for gAmInG mIcE that have extra buttons?
-		self.bind_all("<Button-5>", self.mouseScroll) # alternate scroll? for gAmInG mIcE that have extra buttons?
+		self.bind_all("<Button-4>", self.mouseScroll) # linux scroll
+		self.bind_all("<Button-5>", self.mouseScroll) # linux scroll
+
+		# triggers when canvas is changed in size to keep weird width things from happening
+		self.tasksCanvas.bind("<Configure>", self.taskWidth)
 
 		self.colorScheme = [{"bg": "lightgrey", "fg": "black"},
 							{"bg": "grey", "fg": "white"}]
 
-	def addTask(self):
+	def addTask(self, event=None):
 		# gets text from the input box and removes front and back whitespace
 		taskText = self.taskCreate.get(1.0, tk.END).strip()
+		# print(taskText) # for debug
 
 		if len(taskText) > 0: # makes sure the input isn't blank
 			# make label
@@ -112,7 +116,7 @@ class Todo(tk.Tk):
 		task.configure(bg=scheme["bg"])
 		task.configure(fg=scheme["fg"])
 
-	def onFrameConfig(self):
+	def onFrameConfig(self, event=None):
 		self.tasksCanvas.configure(scrollregion=self.tasksCanvas.bbox("all"))
 
 	def taskWidth(self, event):
@@ -137,11 +141,14 @@ class Todo(tk.Tk):
 
 # if this program is ran (not imported) do this
 if __name__ == "__main__":
-	Todo().mainloop() # display the window
+	todo = Todo() # store the widow
+	todo.mainloop() # display the window
+
 
 """
 import tkinter as tk
 import tkinter.messagebox as msg
+
 
 class Todo(tk.Tk):
 	def __init__(self, tasks=None):
@@ -193,7 +200,7 @@ class Todo(tk.Tk):
 		self.colour_schemes = [{"bg": "lightgrey", "fg": "black"}, {"bg": "grey", "fg": "white"}]
 
 	def add_task(self, event=None):
-		task_text = self.task_create.get(1.0,tk.END).strip()
+		task_text = self.task_create.get(1.0, tk.END).strip()
 
 		if len(task_text) > 0:
 			new_task = tk.Label(self.tasks_frame, text=task_text, pady=10)
@@ -231,7 +238,7 @@ class Todo(tk.Tk):
 
 	def task_width(self, event):
 		canvas_width = event.width
-		self.tasks_canvas.itemconfig(self.canvas_frame, width = canvas_width)
+		self.tasks_canvas.itemconfig(self.canvas_frame, width=canvas_width)
 
 	def mouse_scroll(self, event):
 		if event.delta:
@@ -243,6 +250,7 @@ class Todo(tk.Tk):
 				move = -1
 
 			self.tasks_canvas.yview_scroll(move, "units")
+
 
 if __name__ == "__main__":
 	todo = Todo()
