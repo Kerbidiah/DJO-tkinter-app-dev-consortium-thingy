@@ -17,7 +17,9 @@ class Todo(tk.Tk):
 		self.tasksCanvas = tk.Canvas(self)
 
 		# a frame is a "layout component" that allows you to group stuff together
-		# basically it is an invisible box which makes our lives easier
+
+======= # basically it is an invisible box which makes things easier (and harder at the same time)
+
 		self.textFrame = tk.Frame(self)
 
 		# text input box
@@ -69,7 +71,7 @@ class Todo(tk.Tk):
 		self.bind_all("<Button-4>", self.mouseScroll) # linux scroll
 		self.bind_all("<Button-5>", self.mouseScroll) # linux scroll
 
-		# triggers when canvas is changed in size to keep weird width things from happening
+		# gEtS tRiGgErEd when canvas is changed in size to keep weird width things from happening
 		self.tasksCanvas.bind("<Configure>", self.taskWidth)
 
 		self.colorScheme = [{"bg": "lightgrey", "fg": "black"},
