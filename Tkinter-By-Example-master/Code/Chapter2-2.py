@@ -69,7 +69,7 @@ class Todo(tk.Tk):
 		self.bind_all("<Button-4>", self.mouseScroll) # linux scroll
 		self.bind_all("<Button-5>", self.mouseScroll) # linux scroll
 
-		# triggers when canvas is changed in size to keep weird width things from happening
+		# gEtS tRiGgErEd when canvas is changed in size to keep weird width things from happening
 		self.tasksCanvas.bind("<Configure>", self.taskWidth)
 
 		self.colorScheme = [{"bg": "lightgrey", "fg": "black"},
