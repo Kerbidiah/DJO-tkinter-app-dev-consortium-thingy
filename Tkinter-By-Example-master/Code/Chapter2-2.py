@@ -17,7 +17,9 @@ class Todo(tk.Tk):
 		self.tasksCanvas = tk.Canvas(self)
 
 		# a frame is a "layout component" that allows you to group stuff together
-		# basically it is an (invisible) box which makes things easier (and harder at the same time)
+
+======= # basically it is an invisible box which makes things easier (and harder at the same time)
+
 		self.textFrame = tk.Frame(self)
 
 		# text input box
